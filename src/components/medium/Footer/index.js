@@ -6,8 +6,6 @@ import {
      GitHub as GithubIcon
 } from '@material-ui/icons/';
 
-
-
 const Footer = () => {
     return (
         <footer>
