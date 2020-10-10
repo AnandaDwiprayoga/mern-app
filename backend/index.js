@@ -1,35 +1,24 @@
-const { request } = require('express');
 const express = require('express');
 
 const app = express();
-// untuk router menangkap perpindahan halaman
-const router = express.Router();
+
+const bioRouter = require('./routes/bio');
 
 
-//router.use menerima semua method request, get,post,dll
-router.use('/bio', (request, response, next) => {
-    console.log("url : " + request.originalUrl);
-    console.log("method : " + request.method);
-
-    //mengembalikan response json
-    const dummyResponse = {
-        nama : "ananda dwi prayoga",
-        klass: "MI-3D"
-    };
-
-    response.json(dummyResponse)
-    //next digunakan untuk mengecek route lagi yang sama dan menjalankannya
-    next()
-});
-
-
-//router.get khusus menanagani method get, contoh lainnya router.delete, router.put, dll
-router.get('/user', (request, response, next) => {
-    response.json('this is from get method')
+//untuk setting CORS
+app.use((req, res, next) => {
+    // mengizinkan response dari semua url client, atau bisa secara spesifik. contoh :
+    // res.setHeader('Access-Control-Allow-Origin', 'https://codepen.io'); <- hanya bisa diakses di codepen
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    //mengizinkan semua method, method options adalah default dari web browser ketika melakukan fetch akan menjalankan
+    // option terlebih dahulu untuk pengecekan
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT,PATCH, DELETE, OPTIONS')
+    // header apa saja yang diizinkan
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    next();
 })
 
-
-//homepage express di set sesuai router
-app.use('/', router);
+//   /v1/api/ adalah baseUrl
+app.use('/v1/api/', bioRouter);
 
 app.listen(3300);
