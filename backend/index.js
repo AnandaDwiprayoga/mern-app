@@ -1,9 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 const bioRouter = require('./routes/bio');
 
+//untuk parser request body ke json
+app.use(bodyParser.json())
 
 //untuk setting CORS
 app.use((req, res, next) => {

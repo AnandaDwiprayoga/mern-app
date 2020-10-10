@@ -11,8 +11,11 @@ const readBio = (req, res, next ) => {
 }
 
 const createBio = (req, res, next ) => {
+    //menangkap request body dary client, untuk menangkap request body perlu library body-parser
+    console.log(req.body);
+
     const dummyResponse = {
-        message : "bio was created successfully"
+        message : "bio with name " + req.body.name + " created successfully"
     }
 
     res.json(dummyResponse);
