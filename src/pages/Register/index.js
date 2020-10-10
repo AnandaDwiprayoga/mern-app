@@ -1,9 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { RegisterBg } from '../../assets';
 import { Button, Input, Link } from '../../components';
 import './register.scss';
 
 const Register = () => {
+
+    const history = useHistory();
+
     return (
         <div className="main-page">
             <div className="main-page__left">
@@ -26,9 +30,10 @@ const Register = () => {
 
                 <Button 
                     title="Register"
+                    onClick={() => history.push('/login')}
                     />
 
-                <Link title="Sudah punya akun ? Login"/>
+                <Link title="Sudah punya akun ? Login" onClick={() => history.goBack()}/>
             </div>
         </div>
     );
