@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -39,4 +40,9 @@ app.use( (error, req, res, next ) => {
     })
 })
 
-app.listen(3300);
+//connect mongodb with mongoose library
+mongoose.connect('mongodb+srv://ananda:i8qFQBoPOYtUPPLz@cluster0.nxbkr.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true,})
+    .then(() => {
+        app.listen(3300, () => console.log('success connected'));
+    })
+    .catch(err => console.log(err))
