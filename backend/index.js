@@ -1,14 +1,41 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+//multer for handling multipart form data / upload file 
+const multer = require('multer');
 
 const app = express();
 
 const authRouter = require('./routes/auth');
 const blogRouter = require('./routes/blog');
 
+const storage = multer.diskStorage({
+    destination : (request, file, callback) => {
+        //parameter pertama untuk error diisi null, dan parameter kedua dir tempat penyimpanan
+        callback(null, 'backend/images');
+    },
+    filename : (request, file, callback) => {
+        //parameter pertama untuk error diisi null, dan parameter kedua nama file
+        callback(null, new Date().getTime() + '-' + file.originalname)
+    }
+})
+
+const fileFilter = (request, file, callback) => {
+    if( file.mimetype === 'image/png' || 
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg' )
+    {
+        callback(null, true)
+    }else{
+        callback(null, false)
+    }
+}
+
 //untuk parser request body ke json
 app.use(bodyParser.json())
+
+//single adalah property json yang dikirim di request body, bisa diganti dengan imageUrl,dll
+app.use(multer({storage : storage}).single('image'))
 
 //untuk setting CORS
 app.use((req, res, next) => {
@@ -41,7 +68,7 @@ app.use( (error, req, res, next ) => {
 })
 
 //connect mongodb with mongoose library
-mongoose.connect('mongodb+srv://ananda:i8qFQBoPOYtUPPLz@cluster0.nxbkr.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true,})
+mongoose.connect('mongodb+srv://ananda:i8qFQBoPOYtUPPLz@cluster0.nxbkr.mongodb.net/mern-blog-app?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true,})
     .then(() => {
         app.listen(3300, () => console.log('success connected'));
     })
