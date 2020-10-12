@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 //multer for handling multipart form data / upload file 
 const multer = require('multer');
+const path = require('path');
 
 const app = express();
 
@@ -36,6 +37,9 @@ app.use(bodyParser.json())
 
 //single adalah property json yang dikirim di request body, bisa diganti dengan imageUrl,dll
 app.use(multer({storage : storage}).single('image'))
+
+//midleware agar images dapat diakses di localhost
+app.use('/backend/images', express.static(path.join(__dirname, '/images')));
 
 //untuk setting CORS
 app.use((req, res, next) => {
