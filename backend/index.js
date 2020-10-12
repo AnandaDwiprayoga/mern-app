@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const bioRouter = require('./routes/bio');
+const authRouter = require('./routes/auth');
+const blogRouter = require('./routes/blog');
 
 //untuk parser request body ke json
 app.use(bodyParser.json())
@@ -21,7 +22,21 @@ app.use((req, res, next) => {
     next();
 })
 
-//   /v1/api/ adalah baseUrl
-app.use('/v1/api/', bioRouter);
+//  /v1/api/ adalah baseUrl
+// app.use('/v1/api', bioRouter); <- example
+app.use('/v1/auth', authRouter);
+app.use('/v1/blog', blogRouter);
+
+// membuat error global yang dinamis 
+app.use( (error, req, res, next ) => {
+    const message = error.message;
+    const statusCode = error.statusCode || 500;
+    const data = error.data;
+
+    res.status(statusCode).json({
+        message,
+        data
+    })
+})
 
 app.listen(3300);
