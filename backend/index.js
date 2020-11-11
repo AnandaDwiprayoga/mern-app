@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 //multer for handling multipart form data / upload file 
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 
@@ -64,6 +65,11 @@ app.use( (error, req, res, next ) => {
     const message = error.message;
     const statusCode = error.statusCode || 500;
     const data = error.data;
+    const imagePath = error.imagePath;
+
+    if(statusCode != 200 || statusCode != 201){
+        if(imagePath) fs.unlinkSync(path.join(__dirname, `images/${imagePath}`));
+    }
 
     res.status(statusCode).json({
         message,
