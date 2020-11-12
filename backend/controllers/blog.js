@@ -93,11 +93,30 @@ const updateBlogPost = (req, res, next) => {
 
 
 const getBlogPosts = (req, res, next) => {
+    const currentPage = parseInt(req.query.page) || 1;
+    const itemPerPage = parseInt(req.query.item_per_page) || 5;
+    let totalItem;
+
+
     blogPostModel
         .find()
+        .countDocuments()
+        .then(count => {
+            totalItem = count;
+
+            const offset = (currentPage - 1) * itemPerPage;
+
+            return blogPostModel
+                    .find()
+                    .skip(offset)
+                    .limit(itemPerPage);
+        })
         .then(results => res.status(200).json({
             message : 'Data blog posts berhasil dipanggil',
-            data : results
+            current_page : currentPage,
+            item_per_page : itemPerPage,
+            total_blog : totalItem,
+            data : results,
         }))
         .catch(next)
 }
