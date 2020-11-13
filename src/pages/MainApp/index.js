@@ -18,9 +18,14 @@ const MainApp = () => {
                         <Route path="/create-blog">
                             <CreateBlog />
                         </Route>
-                        <Route path="/detail-blog">
-                            <DetailBlog />
-                        </Route>
+                        {/* router with send url params  */}
+                        <Route path="/detail-blog/:id" render={
+                            (props) => (
+                                <DetailBlog 
+                                    blogId={props.match.params.id}
+                                />
+                            )
+                        } />
                         <Route path="/">
                             <Home />
                         </Route>

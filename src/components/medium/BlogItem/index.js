@@ -3,7 +3,7 @@ import './blog-item.scss'
 import { Button } from '../../small'
 import { useHistory } from 'react-router-dom'
 
-const BlogItem = ({image,title,description,date, authorName}) => {
+const BlogItem = ({id,image,title,description,date, authorName}) => {
     const history = useHistory();
 
     return (
@@ -14,7 +14,7 @@ const BlogItem = ({image,title,description,date, authorName}) => {
                 <h3 className="content__author">{authorName} - {date}</h3>
                 <p className="content__body">{description}</p>
                 <div className="content__button">
-                    <Button title="Detail" onClick={() => history.push('/detail-blog')}/>
+                    <Button title="Detail" onClick={() => history.push(`/detail-blog/${id}`)}/>
                 </div>
             </div>
         </div>

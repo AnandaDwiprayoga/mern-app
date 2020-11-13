@@ -29,6 +29,7 @@ const Home = () => {
                     return (
                         <BlogItem 
                             key={blog._id}
+                            id={blog._id}
                             image={`http://localhost:3300/${blog.image}`}  
                             title={blog.title}
                             description={blog.description}
