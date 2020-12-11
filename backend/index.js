@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+require('dotenv/config');
 
 const app = express();
 
@@ -78,7 +79,7 @@ app.use( (error, req, res, next ) => {
 })
 
 //connect mongodb with mongoose library
-mongoose.connect('mongodb+srv://ananda:i8qFQBoPOYtUPPLz@cluster0.nxbkr.mongodb.net/mern-blog-app?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true,})
+mongoose.connect(process.env.DB_CONNECTION_BLOG, { useNewUrlParser: true , useUnifiedTopology: true,})
     .then(() => {
         app.listen(3300, () => console.log('success connected'));
     })
