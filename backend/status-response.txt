@@ -1,8 +1,0 @@
-200 - OK                    = Call API Success
-201 - CREATED               = Post Success
-400 - BAD REQUEST           = Error on client side ( Bisa input yang salah, dll )
-401 - UNAUTH                = User not authorized to the request
-403 - FORBINDDEN            = User not allowed to access
-404 - NOT FOUND             = Request endpoint not found 
-500 - INTERNAL SERVER ERROR = Error on server side
-502 - BAD GATEWAY           = invalid response from another request
