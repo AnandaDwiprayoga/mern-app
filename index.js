@@ -28,7 +28,7 @@ app.use('/api/posts',tokenVerify, postsRoute);
 app.listen(8081, () => console.log('server up and running'));
 
 // connect mongodb
-mongoose.connect("mongodb+srv://wNX8gyoxCvf9gTTt:wNX8gyoxCvf9gTTt@cluster0.noude.mongodb.net/DevEd?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true}, () => {
+mongoose.connect(process.env.DB_CONNECTION_BLOG, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
     console.log("db connected");
 });
 
